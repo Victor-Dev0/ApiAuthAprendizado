@@ -1,5 +1,6 @@
-﻿using ApiAuth.Models;
+﻿using ApiAuth.DTO.Usuario;
 using ApiAuth.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,19 +18,32 @@ namespace ApiAuth.Controllers
         }
 
         [HttpPost("logar")]
-        public async Task<ActionResult> Login(Usuario usuario)
+        public async Task<ActionResult> Login(UsuarioRequestDTO usuario)
         {
             try
             {
                 var token = _tokenService.GerarToken(usuario);
+                var response = new UsuarioResponseDTO
+                {
+                    Email = usuario.Email,
+                    Token = token
+                };
 
-                return Ok(new { UsuarioLogado = usuario, Token = token });
+                return Ok(response);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            
+
+        }
+
+        [HttpPost("teste-auth")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult> Autorização()
+        {
+            return Ok("Autorizado!!");
+
         }
     }
 }
