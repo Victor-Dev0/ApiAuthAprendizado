@@ -1,4 +1,5 @@
 
+using ApiAuth.Data;
 using ApiAuth.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -40,6 +41,10 @@ namespace ApiAuth
             builder.Services.AddTransient<TokenService>();
 
             var app = builder.Build();
+
+            var banco = new SQLiteConexao();
+
+            banco.Inicializar();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
