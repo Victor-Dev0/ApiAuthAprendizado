@@ -15,7 +15,7 @@ namespace ApiAuth.Repositorio.Login
                               FROM Usuarios 
                               WHERE Email = @Email";
 
-            var retorno = await conexao.ExecutarConsulta<Usuario>(consulta);
+            var retorno = await conexao.ExecutarConsulta<Usuario>(consulta, new { Email = usuario.Email });
 
             return retorno;
         }

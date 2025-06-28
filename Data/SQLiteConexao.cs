@@ -19,19 +19,19 @@ namespace ApiAuth.Data
             var sql = conexao.CreateCommand();
             sql.CommandText = @"CREATE TABLE IF NOT EXISTS Usuarios (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Email TEXT NOT NULL
-                        Senha TEXT NOT NULL
+                        Email TEXT NOT NULL,
+                        Senha TEXT NOT NULL,
                         Role TEXT NOT NULL
                     )";
             sql.ExecuteNonQuery();
         }
 
-        public async Task<T> ExecutarConsulta<T>(string consulta)
+        public async Task<T> ExecutarConsulta<T>(string consulta, object? parametros = null)
         {
             using var conexao = CriarConexao();
             conexao.Open();
             
-            var resultado = await conexao.QueryFirstOrDefaultAsync<T>(consulta);
+            var resultado = await conexao.QueryFirstOrDefaultAsync<T>(consulta, parametros);
 
             return resultado;
         }

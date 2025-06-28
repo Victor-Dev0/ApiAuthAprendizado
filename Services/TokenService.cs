@@ -1,4 +1,5 @@
 ﻿using ApiAuth.DTO.Usuario;
+using ApiAuth.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace ApiAuth.Services
             _configuration = configuration;
         }
 
-        public string GerarToken(UsuarioRequestDTO usuario)
+        public string GerarToken(Usuario usuario)
         {
             var chave = Encoding.UTF8.GetBytes(_configuration["JwtConfig:Key"]!);
 
@@ -37,7 +38,7 @@ namespace ApiAuth.Services
             return strToken;
         }
 
-        private static ClaimsIdentity GerarClaims(UsuarioRequestDTO usuario)
+        private static ClaimsIdentity GerarClaims(Usuario usuario)
         {
             var ci = new ClaimsIdentity();
             ci.AddClaim(new Claim(ClaimTypes.Name, usuario.Email!));

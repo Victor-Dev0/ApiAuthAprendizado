@@ -1,5 +1,5 @@
 ﻿using ApiAuth.DTO.Usuario;
-using ApiAuth.Services;
+using ApiAuth.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,11 @@ namespace ApiAuth.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly TokenService _tokenService;
+        private readonly ILoginService _loginService;
 
-        public LoginController(TokenService tokenService)
+        public LoginController(ILoginService loginService)
         {
-            _tokenService = tokenService;
+            _loginService = loginService;
         }
 
         [HttpPost("logar")]
@@ -22,12 +22,7 @@ namespace ApiAuth.Controllers
         {
             try
             {
-                var token = _tokenService.GerarToken(usuario);
-                var response = new UsuarioResponseDTO
-                {
-                    Email = usuario.Email,
-                    Token = token
-                };
+                var response = await _loginService.Login(usuario);
 
                 return Ok(response);
             }

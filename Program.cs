@@ -1,6 +1,12 @@
 
 using ApiAuth.Data;
+using ApiAuth.Repositorio.Cadastro;
+using ApiAuth.Repositorio.Interfaces;
+using ApiAuth.Repositorio.Login;
 using ApiAuth.Services;
+using ApiAuth.Services.Cadastro;
+using ApiAuth.Services.Interfaces;
+using ApiAuth.Services.Login;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -18,6 +24,12 @@ namespace ApiAuth
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<ILoginRepositorio, LoginRepositorio>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
+            builder.Services.AddScoped<ICadastroRepositorio, CadastroRepositorio>();
+            builder.Services.AddScoped<ICadastroService, CadastroService>();
+
             //Adiciona Autenticação na API
             builder.Services.AddAuthentication(x =>
             {
