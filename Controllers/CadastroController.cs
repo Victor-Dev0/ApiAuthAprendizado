@@ -15,7 +15,7 @@ namespace ApiAuth.Controllers
             _service = service;
         }
 
-        [HttpPost("cadastrar")]
+        [HttpPost]
         public async Task<ActionResult> CadastrarUsuarioNovo(Usuario usuario)
         {
             try

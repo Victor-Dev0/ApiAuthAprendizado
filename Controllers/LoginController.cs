@@ -17,7 +17,7 @@ namespace ApiAuth.Controllers
             _loginService = loginService;
         }
 
-        [HttpPost("logar")]
+        [HttpPost]
         public async Task<ActionResult> Login(UsuarioRequestDTO usuario)
         {
             try
